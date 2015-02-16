@@ -1,14 +1,20 @@
-name := """makecups-backend"""
+import sbt.Keys._
 
-version := "1.0-SNAPSHOT"
-
-lazy val root = (project in file(".")).enablePlugins(PlayJava)
-
-scalaVersion := "2.11.1"
-
-libraryDependencies ++= Seq(
+val playDependencies = Seq(
   javaJdbc,
   javaEbean,
   cache,
   javaWs
 )
+
+lazy val root = (project in file(".")).enablePlugins(PlayJava).
+  settings(
+    name := """makecups-backend""",
+    version := "1.0-SNAPSHOT",
+    scalaVersion := "2.11.1",
+    libraryDependencies ++= playDependencies
+  )
+
+
+
+
