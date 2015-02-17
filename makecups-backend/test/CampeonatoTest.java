@@ -46,12 +46,47 @@ public class CampeonatoTest {
      * a quantidade de times não segue a restrição
      */
     @Test
-    public void testNaoDeixaCampeonatoQuantidadeTime() {
+    public void testNaoDeixaCampeonatoQuantidadeJogadores() {
 
         exception.expect(CampeonatoInvalidoException.class);
         exception.expectMessage(equalTo("Quantidade minima de jogadores inválido"));
         CampeonatoBuilder builder = new CampeonatoBuilderImp();
         Campeonato campeonato = builder.nome("Champion Test League").build();
+    }
+
+    @Test
+    public void testValidaNomeCampeonato() {
+
+        Jogador fulano = new Jogador("Fulano", "");
+        Jogador ciclano = new Jogador("Ciclano", "");
+        Liga liga = new Liga("Campeonato Brasileiro", "Brasil", "America");
+
+        Time timeA = new Time("Gremio", "GRE", "", liga);
+        Time timeB = new Time("Internacional", "INT", "", liga);
+        Time timeC = new Time("Sao Paulo", "SPO", "", liga);
+        Time timeD = new Time("Flamengo", "FLA", "", liga);
+
+        exception.expect(CampeonatoInvalidoException.class);
+        exception.expectMessage("");
+        CampeonatoBuilder builder = new CampeonatoBuilderImp();
+        Campeonato campeonato = builder.nome("    ").
+                jogadores(fulano, ciclano).
+                times(timeA, timeB, timeC, timeD).
+                build();
+    }
+
+    @Test
+    public void testNaoDeixaCampeonatoQuantidadeTimes() {
+
+        Jogador fulano = new Jogador("Fulano", "");
+        Jogador ciclano = new Jogador("Ciclano", "");
+
+        exception.expect(CampeonatoInvalidoException.class);
+        exception.expectMessage(equalTo("Quantidade invalida de times"));
+        CampeonatoBuilder builder = new CampeonatoBuilderImp();
+        Campeonato campeonato = builder.nome("Champion Test League").
+                jogadores(fulano, ciclano).
+                build();
     }
 
     /**
