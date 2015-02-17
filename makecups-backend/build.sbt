@@ -1,5 +1,10 @@
 import sbt.Keys._
 
+val guice = Seq(
+  "com.google.inject" % "guice" % "3.0",
+  "javax.inject" % "javax.inject" % "1"
+)
+
 val playDependencies = Seq(
   javaJdbc,
   javaEbean,
@@ -17,6 +22,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava).
     version := "1.0-SNAPSHOT",
     scalaVersion := "2.11.1",
     libraryDependencies ++= playDependencies,
+    libraryDependencies ++= guice,
     compile in Test <<= Play.PostCompile(Test)
   )
 
