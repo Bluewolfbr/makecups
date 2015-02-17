@@ -20,37 +20,34 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
-package domain.models;
+ */
+package domain.models.campeonato.validation;
 
-public class Time {
+import ddd.easy.exceptions.InvalidEntityException;
+import ddd.easy.validation.ChainValidator;
+import ddd.easy.validation.Validator;
+import domain.models.campeonato.Campeonato;
+import domain.models.campeonato.exceptions.CampeonatoInvalidoException;
 
-    private String nome;
-    private String apelido;
-    private String simbolo;
-    private Liga liga;
+import java.util.Arrays;
+import java.util.List;
 
+public class TamanhoTimeValidatior extends ChainValidator<Campeonato> {
 
-    public Time(String nome, String apelido, String simbolo, Liga liga) {
-        this.nome = nome;
-        this.apelido = apelido;
-        this.simbolo = simbolo;
-        this.liga = liga;
+    List<Integer> quantidadeValidas = Arrays.asList(4, 8, 16, 32);
+
+    public TamanhoTimeValidatior(Validator<Campeonato> next) {
+
+        super(next);
     }
 
-    public String getNome() {
-        return nome;
-    }
+    @Override
+    public void validate(Campeonato campeonato) throws InvalidEntityException {
 
-    public String getApelido() {
-        return apelido;
-    }
-
-    public String getSimbolo() {
-        return simbolo;
-    }
-
-    public Liga getLiga() {
-        return liga;
+        Integer quantidadeTimes = campeonato.sizeTimes();
+        if(!quantidadeValidas.contains(quantidadeTimes)){
+            throw new CampeonatoInvalidoException("Quantidade invalida de times");
+        }
+        super.validate(campeonato);
     }
 }

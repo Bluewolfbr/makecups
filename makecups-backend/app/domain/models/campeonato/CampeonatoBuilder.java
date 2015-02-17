@@ -23,12 +23,12 @@ SOFTWARE.
 */
 package domain.models.campeonato;
 
+import ddd.easy.Builder;
 import domain.models.Jogador;
 import domain.models.Time;
-import domain.repositories.Builder;
-import domain.repositories.Factory;
+import domain.models.campeonato.exceptions.CampeonatoInvalidoException;
 
-public interface CampeonatoBuilder extends Builder<Campeonato>{
+public interface CampeonatoBuilder extends Builder<Campeonato> {
 
     public CampeonatoDefinitionBuilder nome(String nome);
 
@@ -37,6 +37,6 @@ public interface CampeonatoBuilder extends Builder<Campeonato>{
 
         public CampeonatoDefinitionBuilder times(Time... times);
 
-        public Campeonato build();
+        public Campeonato build() throws CampeonatoInvalidoException;
     }
 }

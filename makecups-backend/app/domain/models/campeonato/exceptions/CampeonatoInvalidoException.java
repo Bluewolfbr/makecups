@@ -21,9 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package domain.repositories;
+package domain.models.campeonato.exceptions;
 
-public interface Factory<B extends Builder<E>, E> {
+import ddd.easy.exceptions.InvalidEntityException;
 
-    public B build();
+/**
+ * Quando se tenta criar um campeonato que não atinge as restrições
+ * necessárias para sua criação é lançado uma exceção
+ */
+public class CampeonatoInvalidoException extends InvalidEntityException{
+
+    public CampeonatoInvalidoException(String message) {
+        super(message);
+    }
+
+    public CampeonatoInvalidoException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

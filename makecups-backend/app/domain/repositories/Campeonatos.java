@@ -23,8 +23,10 @@ SOFTWARE.
 */
 package domain.repositories;
 
+import ddd.easy.Factory;
 import domain.models.campeonato.Campeonato;
 import domain.models.campeonato.CampeonatoBuilder;
+import ddd.easy.Repository;
 
 import java.util.List;
 

@@ -23,17 +23,33 @@ SOFTWARE.
  */
 package domain.models.campeonato;
 
+import ddd.easy.Entity;
+import ddd.easy.validation.Validator;
 import domain.models.Jogador;
-
+import domain.models.Time;
+import domain.models.campeonato.validation.NomeCampeonatoValidator;
+import domain.models.campeonato.validation.QuantidadeJogadoresValidator;
+import domain.models.campeonato.validation.TamanhoTimeValidatior;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Campeonato {
+public class Campeonato implements Entity{
 
-    private String nome;
-    private Date criado;
+    private final String nome;
+    private final Date criado;
     private Jogador campeao;
-    private List<Chave> chaves;
+    private final List<Chave> chaves;
+    private final List<Time> times;
+    private final List<Jogador> jogadores;
+
+    protected Campeonato(String nome, List<Time> times, List<Jogador> jogadores) {
+        this.nome = nome;
+        criado = new Date();
+        this.chaves = new ArrayList<>();
+        this.times = times;
+        this.jogadores = jogadores;
+    }
 
     public String getNome() {
         return nome;
@@ -45,5 +61,34 @@ public class Campeonato {
 
     public Jogador getCampeao() {
         return campeao;
+    }
+
+    public List<Chave> getChaves() {
+        //TODO determinar logica para retornar somente chaves da rodada atual
+        return chaves;
+    }
+
+    public List<Jogador> getJogadores() {
+        return jogadores;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Integer sizeTimes() {
+       return times.size();
+    }
+
+    public Integer sizeJogadores() {
+        return jogadores.size();
+    }
+
+    @Override
+    public Validator getValidator() {
+        Validator<Campeonato> nomeValidator = new NomeCampeonatoValidator();
+        Validator<Campeonato> tamanhoTimeValidator = new TamanhoTimeValidatior(nomeValidator);
+        Validator<Campeonato> quantidadeJogadoresValidator = new QuantidadeJogadoresValidator(tamanhoTimeValidator);
+        return quantidadeJogadoresValidator;
     }
 }

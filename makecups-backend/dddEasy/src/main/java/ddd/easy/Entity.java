@@ -21,36 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package domain.models;
+package ddd.easy;
 
-public class Time {
+import ddd.easy.validation.Validator;
 
-    private String nome;
-    private String apelido;
-    private String simbolo;
-    private Liga liga;
+import java.io.Serializable;
 
+public interface Entity<E extends Entity> extends Serializable {
 
-    public Time(String nome, String apelido, String simbolo, Liga liga) {
-        this.nome = nome;
-        this.apelido = apelido;
-        this.simbolo = simbolo;
-        this.liga = liga;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getApelido() {
-        return apelido;
-    }
-
-    public String getSimbolo() {
-        return simbolo;
-    }
-
-    public Liga getLiga() {
-        return liga;
-    }
+    /**
+     * return the validator that can verify the entity constrains
+     * @return
+     */
+    public Validator<E> getValidator();
 }
