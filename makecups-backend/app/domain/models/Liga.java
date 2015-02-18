@@ -23,10 +23,12 @@ SOFTWARE.
 */
 package domain.models;
 
-public class Liga {
-    private String nome;
-    private String pais;
-    private String continente;
+import ddd.easy.ValueObject;
+
+public class Liga implements ValueObject {
+    private final String nome;
+    private final String pais;
+    private final String continente;
 
     public Liga(String nome, String pais, String continente) {
         this.nome = nome;
@@ -44,5 +46,27 @@ public class Liga {
 
     public String getContinente() {
         return continente;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Liga liga = (Liga) o;
+
+        if (continente != null ? !continente.equals(liga.continente) : liga.continente != null) return false;
+        if (nome != null ? !nome.equals(liga.nome) : liga.nome != null) return false;
+        if (pais != null ? !pais.equals(liga.pais) : liga.pais != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nome != null ? nome.hashCode() : 0;
+        result = 31 * result + (pais != null ? pais.hashCode() : 0);
+        result = 31 * result + (continente != null ? continente.hashCode() : 0);
+        return result;
     }
 }
