@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface LigasRepository extends Repository<Liga>{
 
+    public Long insert(Liga liga);
 
     public Liga consutar(Long id);
 

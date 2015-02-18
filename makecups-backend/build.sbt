@@ -5,6 +5,8 @@ val guice = Seq(
   "javax.inject" % "javax.inject" % "1"
 )
 
+val guava = "com.google.guava" % "guava" % "18.0"
+
 val slick = "com.typesafe.play" %% "play-slick" % "0.8.1"
 
 val playDependencies = Seq(
@@ -25,6 +27,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala).
     scalaVersion := "2.11.1",
     libraryDependencies ++= playDependencies,
     libraryDependencies ++= guice,
+    libraryDependencies += guava,
     compile in Test <<= Play.PostCompile(Test)
   )
 

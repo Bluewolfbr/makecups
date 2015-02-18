@@ -25,7 +25,8 @@ package infrastructure.persistence.tables
 
 import java.{lang, util}
 import java.util.{Collections, Optional}
-
+import com.google.common.collect.ImmutableList
+import play.api.Play.current
 import domain.models
 import domain.repositories.LigasRepository
 import domain.repositories.LigasRepository.LigaBuilder
@@ -33,20 +34,20 @@ import play.api.db.slick.Config.driver.simple._
 import scala.collection.JavaConversions
 import scala.slick.lifted.{Column, Tag}
 
-case class Liga(id: Long,
-                nome: String,
-                pais: String,
-                regiao: String)
+case class Liga(val id: Option[Long] = Option[Long](0),
+                val nome: String,
+                val pais: String,
+                val regiao: String)
+
 
 class Ligas(tag: Tag) extends Table[Liga](tag, "LIGAS"){
 
-  def id= column[String]("ID", O.PrimaryKey, O.AutoInc)
+  def id= column[Long]("ID", O.PrimaryKey, O.AutoInc)
   def nome = column[String]("NOME")
   def pais = column[String]("PAIS")
   def regiao = column[String]("REGIAO")
-  def * = (id, nome, pais, regiao) <> (Liga.tupled, Liga.unapply _)
+  def * = (id.?, nome, pais, regiao) <> (Liga.tupled, Liga.unapply)
 }
-
 
 class LigaBuilderImpl(nome: String, pais: String, regiao: String) extends LigaBuilder {
 
@@ -57,20 +58,36 @@ object LigaRepositoryImpl extends LigasRepository {
 
   val ligas = TableQuery[Ligas]
 
-  def converter(l: Ligas): models.Liga = build(l.nome.toString, l.pais.toString, l.regiao.toString).build
+  def converter(l: Liga): models.Liga = build(l.nome, l.pais, l.regiao).build
 
-  override def consutar(id: lang.Long)(implicit s: Session): models.Liga = {
-    val d = Long.box(id)
-    play.api.db.slick.DB.withSession{ implicit session =>
-      ligas.filter(_.id === d).map( converter ).first
+  override def insert(liga: models.Liga): lang.Long = {
+    play.api.db.slick.DB.withSession[lang.Long] { implicit session =>
+      (ligas returning ligas.map(_.id)) += Liga(None, liga.getNome, liga.getPais, liga.getContinente)
     }
   }
+
+  override def consutar(id: lang.Long): models.Liga =
+  {
+    converter( _consultar(id))
+  }
+
+  def _consultar(id: Long): Liga=
+    play.api.db.slick.DB.withSession[Liga] { implicit session =>
+      ligas.filter(_.id === id).first
+    }
 
 
   override def build(nome: String, pais: String, regiao: String): LigaBuilder =
     new LigaBuilderImpl(nome, pais, regiao)
 
-  override def todos()(implicit s: Session): util.List[models.Liga] = {
-      ligas.map(converter).list
-  }
+  override def todos(): util.List[models.Liga] =
+    play.api.db.slick.DB.withSession[util.List[models.Liga]] { implicit session =>
+      var builder: ImmutableList.Builder[models.Liga] = ImmutableList.builder[models.Liga]()
+
+      ligas.foreach {
+        liga: Liga =>
+          builder = builder.add( converter(liga))
+      }
+      builder.build
+    }
 }
