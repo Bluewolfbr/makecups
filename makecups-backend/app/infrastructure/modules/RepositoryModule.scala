@@ -21,18 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-import com.google.inject.{AbstractModule, Guice}
+package infrastructure.modules
 
-import play.api.GlobalSettings
+import com.google.inject.AbstractModule
+import domain.models.campeonato.{CampeonatoBuilderImp, CampeonatoBuilder}
 
-object Global extends GlobalSettings {
-
-  val injector = Guice.createInjector(
-    new AbstractModule {
-      override def configure(): Unit = {
-
-      }
-    });
-
-  override def getControllerInstance[A](controllerClass: Class[A]): A = injector.getInstance(controllerClass)
+class RepositoryModule extends AbstractModule {
+  override def configure(): Unit = {
+    bind(classOf[CampeonatoBuilder]).to(classOf[CampeonatoBuilderImp])
+  }
 }
