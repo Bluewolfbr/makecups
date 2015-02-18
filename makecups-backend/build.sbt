@@ -5,16 +5,18 @@ val guice = Seq(
   "javax.inject" % "javax.inject" % "1"
 )
 
+val slick = "com.typesafe.play" %% "play-slick" % "0.8.1"
+
 val playDependencies = Seq(
-  javaJdbc,
-  javaEbean,
+  jdbc,
   cache,
-  javaWs
+  ws,
+  slick
 )
 
 lazy val dddEasy = project
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava).
+lazy val root = (project in file(".")).enablePlugins(PlayScala).
   aggregate(dddEasy).
   dependsOn(dddEasy).
   settings(
