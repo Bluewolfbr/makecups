@@ -23,11 +23,10 @@ SOFTWARE.
 */
 package ddd.easy;
 
-import java.io.Serializable;
-
-public interface ValueObject extends Serializable {
-
-    public boolean equals(Object o);
-
-    public int hashCode();
+/**
+ * Dto representation that can be used to
+ * keep a state and ...
+ * TODO improve this doc
+ */
+public interface Dto extends ValueObject {
 }
