@@ -1,3 +1,6 @@
+import com.google.inject.{AbstractModule, Guice}
+import domain.repositories.LigaRepository
+import infrastructure.persistence.tables.LigaRepositoryImpl
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
@@ -25,6 +28,17 @@ class ApplicationSpec extends Specification {
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
       contentAsString(home) must contain ("Your new application is ready.")
+    }
+  }
+
+  "Guice" should {
+    "inject a oject to java interface" in {
+      val injector = Guice.createInjector( new AbstractModule {
+        override def configure(): Unit =
+          bind(classOf[LigaRepository]).toInstance(LigaRepositoryImpl)
+      })
+      val repo: LigaRepository = injector.getInstance(classOf[LigaRepository])
+      repo must not beNull
     }
   }
 }

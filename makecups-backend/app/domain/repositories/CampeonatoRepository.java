@@ -30,7 +30,7 @@ import ddd.easy.Repository;
 
 import java.util.List;
 
-public interface Campeonatos extends Repository<Campeonato>, Factory<CampeonatoBuilder, Campeonato> {
+public interface CampeonatoRepository extends Repository<Campeonato>, Factory<CampeonatoBuilder, Campeonato> {
 
     public List<Campeonato> todos();
 

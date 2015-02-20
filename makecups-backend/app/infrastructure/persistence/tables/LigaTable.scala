@@ -28,8 +28,8 @@ import java.util.{Collections, Optional}
 import com.google.common.collect.ImmutableList
 import play.api.Play.current
 import domain.models
-import domain.repositories.LigasRepository
-import domain.repositories.LigasRepository.LigaBuilder
+import domain.repositories.LigaRepository
+import domain.repositories.LigaRepository.LigaBuilder
 import play.api.db.slick.Config.driver.simple._
 import scala.collection.JavaConversions
 import scala.slick.lifted.{Column, Tag}
@@ -54,7 +54,7 @@ class LigaBuilderImpl(nome: String, pais: String, regiao: String) extends LigaBu
   override def build(): models.Liga = new models.Liga(nome, pais, regiao)
 }
 
-object LigaRepositoryImpl extends LigasRepository {
+object LigaRepositoryImpl extends LigaRepository {
 
   val ligas = TableQuery[Ligas]
 

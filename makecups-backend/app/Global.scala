@@ -22,17 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 import com.google.inject.{AbstractModule, Guice}
+import domain.repositories
+import domain.repositories.LigaRepository
+import infrastructure.persistence.tables.LigaRepositoryImpl
 
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings {
 
-  val injector = Guice.createInjector(
-    new AbstractModule {
-      override def configure(): Unit = {
-
-      }
-    });
+  val injector = Guice.createInjector(repositoriesModule);
 
   override def getControllerInstance[A](controllerClass: Class[A]): A = injector.getInstance(controllerClass)
+}
+
+object repositoriesModule extends AbstractModule {
+  override def configure(): Unit = {
+    bind(classOf[LigaRepository]).toInstance(LigaRepositoryImpl)
+  }
 }

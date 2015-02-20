@@ -8,7 +8,7 @@ import domain.models.campeonato.CampeonatoBuilder;
 
 import java.util.List;
 
-public interface LigasRepository extends Repository<Liga>{
+public interface LigaRepository extends Repository<Liga>{
 
     public Long insert(Liga liga);
 
