@@ -1,4 +1,4 @@
-package com.makecups.android;
+package com.makecups.android.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.makecups.android.R;
 
 
 public class WelcomeActivity extends ActionBarActivity {
