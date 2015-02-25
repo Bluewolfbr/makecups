@@ -10,11 +10,6 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.WelcomeActivity"
@@ -23,9 +18,18 @@
 
         <provider
             android:name=".provider.MakeCupsProvider"
-            android:authorities="com.makecups.makecupsprovider"
-           >
+            android:authorities="com.makecups.makecupsprovider" >
         </provider>
+
+        <activity
+            android:name=".activity.NavigationActivity"
+            android:label="@string/title_activity_navigation" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

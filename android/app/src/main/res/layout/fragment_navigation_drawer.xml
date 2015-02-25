@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.makecups.android.activity.NavigationDrawerFragment">
+
+    <TextView
+        android:id="@+id/headerView"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/photo"
+        android:gravity="center_vertical"
+        android:padding="25dp"
+        android:text="Wesckley"
+         />
+
+    <ListView
+        android:id="@+id/navigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:choiceMode="singleChoice"
+        android:layout_below="@+id/headerView"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#cccc"
+        tools:context="com.makecups.android.activity.NavigationDrawerFragment" />
+
+</RelativeLayout>
