@@ -1,2 +1,2 @@
-# makecups
-Organize sues campeonatos de forma simples
+# Make Cups
+Organize campeonatos com seus amigos de forma simples.
