@@ -5,19 +5,19 @@ class Liga {
 	private $nome;
 	
 	public function getIdLiga(){
-		return $id_liga;
+		return $this->id_liga;
 	}
 	
 	public function getNome(){
-		return $nome;
+		return $this->nome;
 	}
 	
 	public function setIdLiga($id_liga){
-		$id_liga = $id_liga;
+		$this->id_liga = $id_liga;
 	}
 	
 	public function setNome($nome){
-		$nome = $nome;
+		$this->nome = utf8_encode($nome);
 	}
 	
 	
