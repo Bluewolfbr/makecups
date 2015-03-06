@@ -1,19 +1,19 @@
 <?php
 class Liga {
 
-	private $id_liga;
+	private $id;
 	private $nome;
 	
-	public function getIdLiga(){
-		return $this->id_liga;
+	public function getId(){
+		return $this->id;
 	}
 	
 	public function getNome(){
 		return $this->nome;
 	}
 	
-	public function setIdLiga($id_liga){
-		$this->id_liga = $id_liga;
+	public function setId($id){
+		$this->id = $id;
 	}
 	
 	public function setNome($nome){

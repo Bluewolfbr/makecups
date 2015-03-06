@@ -1,14 +1,14 @@
 <?php
 class Clube {
 	
-	private $id_clube;
+	private $id;
 	private $nome;
 	private $nome_completo;
 	private $abbr;
 	private $liga;
 		
-	function getIdClube(){
-		return $this->id_clube;
+	function getId(){
+		return $this->id;
 	}
 	
 	function getNome(){
@@ -27,8 +27,8 @@ class Clube {
 		return $this->liga;
 	}
 	
-	function setIdClube($id_clube){
-		$this->id_clube = $id_clube;
+	function setId($id){
+		$this->id = $id;
 	}
 	
 	function setNome($nome){

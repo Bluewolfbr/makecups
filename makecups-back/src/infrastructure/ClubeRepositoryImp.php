@@ -7,11 +7,11 @@ class ClubeRepositoryImp implements IClubeRepository {
 	
 	function getAll(){
 		$liga = new Liga();
-		$liga->setIdLiga(1);
+		$liga->setId(1);
 		$liga->setNome("Brasileirão Série A");
 		
 		$clube = new Clube();
-		$clube->setIdClube(1);
+		$clube->setId(1);
 		$clube->setAbbr("GRE");
 		$clube->setLiga($liga);
 		$clube->setNome("GRÊMIO");
@@ -21,11 +21,11 @@ class ClubeRepositoryImp implements IClubeRepository {
 		array_push($listClubes, $clube);
 		
 		$liga = new Liga();
-		$liga->setIdLiga(2);
+		$liga->setId(2);
 		$liga->setNome("Brasileirão Série A");
 		
 		$clube = new Clube();
-		$clube->setIdClube(2);
+		$clube->setId(2);
 		$clube->setAbbr("INT");
 		$clube->setLiga($liga);
 		$clube->setNome("INTERNACIONAL");
@@ -39,11 +39,11 @@ class ClubeRepositoryImp implements IClubeRepository {
 	
 	function getById($id){
 		$liga = new Liga();
-		$liga->setIdLiga(1);
+		$liga->setId(1);
 		$liga->setNome("Brasileirão Série A");
 		
 		$clube = new Clube();
-		$clube->setIdClube(1);
+		$clube->setId(1);
 		$clube->setAbbr("GRE");
 		$clube->setLiga($liga);
 		$clube->setNome("GRÊMIO");
@@ -60,7 +60,7 @@ class ClubeRepositoryImp implements IClubeRepository {
 		
 		foreach ($clubes as $clube) {
 			$tmp = array(
-					"id" => $clube->getIdClube(),
+					"id" => $clube->getId(),
 					"nome" => $clube->getNome(),
 					"abbr" => $clube->getAbbr(),
 					"nome_completo" => $clube->getNomeCompleto(),
