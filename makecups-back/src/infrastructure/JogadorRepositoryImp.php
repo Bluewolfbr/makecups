@@ -1,5 +1,6 @@
 <?php
-require 'src/domain/entity/campeonato/Jogador.php';
+
+require 'src/domain/repository/IJogadorRepository.php';
 
 class JogadorRepositoryImp implements IJogadorRepository {
 	
@@ -15,6 +16,24 @@ class JogadorRepositoryImp implements IJogadorRepository {
 	
 	function getById($id) {
 		
+	}
+	
+private function parseToJson($jogadores) {
+		$json = array ();
+		
+		foreach ( $jogadores as $jogador ) {
+			$tmp = array (
+					"id" => $campeonato->getId (),
+					"nome" => $campeonato->getNome (),
+					"criado" => $campeonato->getCriado(),
+					"finalizado" => $campeonato->getFinalizado (),
+					"status" => $campeonato->getStatus(),
+					"campeao" => $campeonato->getJogadorRepository()->parseToJson($campeonato->getCampeao())
+			);
+			array_push ( $json, $tmp );
+		}
+		
+		return $json;
 	}
 	
 	

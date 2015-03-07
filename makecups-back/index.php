@@ -1,7 +1,8 @@
 <?php
 require 'vendor/autoload.php';
 require 'src/infrastructure/ClubeRepositoryImp.php';
-require 'src/domain/valueObject/Usuario.php';
+require 'src/infrastructure/CampeonatoRepositoryImp.php';
+require 'src/domain/entity/Usuario.php';
 
 $app = new \Slim\Slim ();
 $app->response ()->header ( 'Content-Type', 'application/json;charset=utf-8' );
@@ -47,7 +48,7 @@ $app->group ( "/v1", function () use($app) {
 			$usuario->setSenha($app->request->headers->get('Php-Auth-Pw'));
 			
 			$campeonatoRepository = $app->campeonatoRepository;
-			$campeonatos = $campeonatoRepository->getCampeonatosByUsuario ($usuario);
+			$campeonatos = $campeonatoRepository->getCampeonatos($usuario);
 			
 			echo json_encode ($campeonatos);
 		} );

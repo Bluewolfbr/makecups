@@ -1,4 +1,7 @@
 <?php
+
+require 'src/infrastructure/JogadorRepositoryImp.php';
+
 class Campeonato {
 	
 	private $id;
@@ -11,6 +14,8 @@ class Campeonato {
 	
 	function __construct($jogadorRepositoryImp){
 		$this->jogadorRepository = $jogadorRepositoryImp;
+		$this->criado = new DateTime();
+		$this->status = "CRIADO";
 	}
 	
 	function getId () {
@@ -37,6 +42,10 @@ class Campeonato {
 		return $this->campeao;
 	}
 	
+	function getJogadorRepository () {
+		return $this->jogadorRepository;
+	}
+	
 	
 	function setId ($id) {
 		$this->id = $id;
@@ -45,20 +54,8 @@ class Campeonato {
 	function setNome ($nome) {
 		$this->nome = $nome;
 	}
-
-	function setCriado ($criado) {
-		$this->criado = $criado;
-	}
 	
-	function setFinalizado ($finalizado) {
-		$this->finalizado = $finalizado;
-	}
-	
-	function setStatus ($status) {
-		$this->status = $status;
-	}
-	
-	function setCampeao ($campeao) {
+	function setCampeao ($campeao){
 		$this->campeao = $campeao;
 	}
 	

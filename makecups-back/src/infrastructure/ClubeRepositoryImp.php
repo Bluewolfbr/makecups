@@ -55,7 +55,7 @@ class ClubeRepositoryImp implements IClubeRepository {
 		return $this->parseToJson($listClubes);
 	}
 	
-	function parseToJson($clubes){
+	private function parseToJson($clubes){
 		$json = array();
 		
 		foreach ($clubes as $clube) {
