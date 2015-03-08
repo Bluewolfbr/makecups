@@ -1,26 +1,19 @@
 <?php
 class Liga {
 
-	private $id;
-	private $nome;
-	
+	private final $id;
+	private final $nome;
+
+	function __constructor($id, $nome){
+			$this->id = $id;
+			$this->nome= $nome;
+	}
+
 	public function getId(){
 		return $this->id;
 	}
-	
+
 	public function getNome(){
 		return $this->nome;
 	}
-	
-	public function setId($id){
-		$this->id = $id;
-	}
-	
-	public function setNome($nome){
-		$this->nome = utf8_encode($nome);
-	}
-	
-	
-	
-	
 }
