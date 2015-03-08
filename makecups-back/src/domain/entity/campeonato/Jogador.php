@@ -1,5 +1,4 @@
 <?php
-//require 'src/domain/entity/Clube.php';
 
 class Jogador {
 	

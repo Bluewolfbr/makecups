@@ -1,31 +1,57 @@
 <?php
+require 'src/domain/repository/IFactoryBase.php';
 
-interface CampeonatoBuilder implements IFactoryBase {
+interface CampeonatoBuilder extends IFactoryBase {
 
-  function times($times);
+  function clubes($clubes);
 
   function jogadores($jogadores);
 
   function build();
 
 }
-class CampeonatoBuilderImpl implements CampeonatoBuilder {
+
+class CampeonatoBuilderImp implements CampeonatoBuilder {
 
   private $nome;
 
-  private $times = [];
+  private $clubes = array();
 
-  private $jogadores;
+  private $jogadores = array();
 
   function __constructor($nome) {
     $this->nome = $nome;
-    $this->times = array();
-    $this->jogadores = array();
+   
   }
 
-  ...
+  function jogadores ($jogadores){
+  	if (!is_array($jogadores)){
+  		array_push($this->jogadores, $jogadores);
+  	}
+  	else {
+  		foreach ($jogadores as $jogador) {
+  			array_push($this->jogadores, $jogador);
+  		}
+  	}
+  	
+  	return $this;
+  }
+  
+  function clubes ($clubes){
+  	if (!is_array($clubes)){
+  		array_push($this->clubes, $clubes);
+  	}
+  	else {
+  		foreach ($clubes as $clube) {
+  			array_push($this->clubes, $clube);
+  		}
+  	}
+  	 
+  	return $this;
+  }
 
-  fucntion build(){
-    $campeonato = new Campeonato($nome, $times, $jogadores);
+  function build () {
+    $campeonato = new Campeonato($this->nome, $this->clubes, $this->jogadores);
+    return $campeonato;
   }
 }

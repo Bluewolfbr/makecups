@@ -6,12 +6,21 @@ require 'src/domain/entity/Usuario.php';
 require 'src/domain/entity/campeonato/Campeonato.php';
 require 'src/domain/entity/campeonato/CampeonatoBuilder.php';
 
+require 'src/domain/entity/Clube.php';
+
+require 'src/domain/entity/campeonato/Jogador.php';
+
+
+require 'src/domain/entity/Liga.php';
+require 'src/domain/repository/IJogadorRepository.php';
+
 $app = new \Slim\Slim ();
 $app->response ()->header ( 'Content-Type', 'application/json;charset=utf-8' );
 
 $app->campeonatoBuilder = function() {
 	return new CampeonatoBuilderImpl();
-}
+};
+
 $app->clubeRepository = function () {
 	return new ClubeRepositoryImp ();
 };
@@ -48,18 +57,26 @@ $app->group ( "/v1", function () use($app) {
 	$app->group ( "/campeonatos", function () use($app) {
 
 		$app->post( '/', function () use($app){
-			$campeonato = ???
-			$jogadores = ???
-			$times = ???
+			
+			$usuario = new Usuario();
+			$usuario->setLogin($app->request->headers->get('Php-Auth-User'));
+			$usuario->setSenha($app->request->headers->get('Php-Auth-Pw'));
+			
+			$dados = json_decode($app->request->getBody());
+			
+			var_dump( $dados->jogadores);
+		
+			$campeonato = Campeonato::builder($dados->campeonato->nome)
+				->clubes($dados->clubes)
+				->jogadores($dados->jogadores)
+				->build();
 
-			$campeonato = Campeonato.builder($campeonato.nome)
-				.times($times)
-				.jogadores($jogadores)
-				.build();
-
-			$repo = $app->campeonatoRepository;
-			$campeonato = $repo.save($campeonato);
+			/*$repo = $app->campeonatoRepository;
+			$campeonato = $repo.save($campeonato); */
+			
+			var_dump($campeonato);
 		});
+		
 		$app->get ( '/', function () use($app) {
 			$usuario = new Usuario();
 			$usuario->setLogin($app->request->headers->get('Php-Auth-User'));

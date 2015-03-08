@@ -1,8 +1,8 @@
 <?php
 class Liga {
 
-	private final $id;
-	private final $nome;
+	private $id;
+	private $nome;
 
 	function __constructor($id, $nome){
 			$this->id = $id;

@@ -1,5 +1,7 @@
 <?php
 
-public interface IFactoryBase {
+interface IFactoryBase {
+	
+	function build();
 
 }

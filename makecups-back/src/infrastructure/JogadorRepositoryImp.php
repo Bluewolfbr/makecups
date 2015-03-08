@@ -1,7 +1,5 @@
 <?php
 
-require 'src/domain/repository/IJogadorRepository.php';
-
 class JogadorRepositoryImp implements IJogadorRepository {
 	
 	private $jogador;

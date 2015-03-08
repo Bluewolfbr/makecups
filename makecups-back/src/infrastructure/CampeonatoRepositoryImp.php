@@ -1,6 +1,4 @@
 <?php
-require 'src/domain/entity/campeonato/Campeonato.php';
-require 'src/domain/entity/campeonato/Jogador.php';
 require 'src/domain/repository/ICampeonatoRepository.php';
 
 class CampeonatoRepositoryImp implements ICampeonatoRepository {

@@ -1,7 +1,5 @@
 <?php
 require 'src/domain/repository/IClubeRepository.php';
-require 'src/domain/entity/Clube.php';
-require 'src/domain/entity/Liga.php';
 
 class ClubeRepositoryImp implements IClubeRepository {
 	
