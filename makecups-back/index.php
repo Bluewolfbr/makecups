@@ -64,7 +64,7 @@ $app->group ( "/v1", function () use($app) {
 			
 			$dados = json_decode($app->request->getBody());
 			
-			var_dump( $dados->jogadores);
+			//var_dump( $dados->jogadores);
 		
 			$campeonato = Campeonato::builder($dados->campeonato->nome)
 				->clubes($dados->clubes)
@@ -74,7 +74,7 @@ $app->group ( "/v1", function () use($app) {
 			/*$repo = $app->campeonatoRepository;
 			$campeonato = $repo.save($campeonato); */
 			
-			var_dump($campeonato);
+			//var_dump($campeonato);
 		});
 		
 		$app->get ( '/', function () use($app) {

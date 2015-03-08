@@ -25,6 +25,7 @@ class CampeonatoBuilderImp implements CampeonatoBuilder {
   }
 
   function jogadores ($jogadores){
+  	//TODO Criar objetos Jogadores
   	if (!is_array($jogadores)){
   		array_push($this->jogadores, $jogadores);
   	}
@@ -38,6 +39,7 @@ class CampeonatoBuilderImp implements CampeonatoBuilder {
   }
   
   function clubes ($clubes){
+  	//TODO criar objetos clubes
   	if (!is_array($clubes)){
   		array_push($this->clubes, $clubes);
   	}
