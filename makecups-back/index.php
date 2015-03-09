@@ -63,18 +63,14 @@ $app->group ( "/v1", function () use($app) {
 			$usuario->setSenha($app->request->headers->get('Php-Auth-Pw'));
 			
 			$dados = json_decode($app->request->getBody());
-			
-			//var_dump( $dados->jogadores);
 		
 			$campeonato = Campeonato::builder($dados->campeonato->nome)
 				->clubes($dados->clubes)
 				->jogadores($dados->jogadores)
 				->build();
 
-			/*$repo = $app->campeonatoRepository;
-			$campeonato = $repo.save($campeonato); */
+		 	$app->response->headers->set('Location', 'http://localhost/makecups/makecups-back/v1/campeonatos/' . $campeonato->getId());
 			
-			//var_dump($campeonato);
 		});
 		
 		$app->get ( '/', function () use($app) {
@@ -90,10 +86,9 @@ $app->group ( "/v1", function () use($app) {
 
 		$app->get ( '/:id', function ($id) use($app) {
 
-			$clubeRepository = $app->clubeRepository;
-			$clube = $clubeRepository->getById ( $id );
+			echo "FUNFA MESMO ESSE NEGOCIO";
 
-			echo json_encode ( $clube );
+			
 		} );
 	} );
 } );

@@ -7,15 +7,14 @@ class Campeonato {
 	private $status;
 	private $campeao;
 	private $jogadores;
-	private $clubes;
+	
 	function __construct($nome, $clubes, $jogadores) {
 		$this->nome = $nome;
-		$this->clubes = $clubes;
 		$this->jogadores = $jogadores;
 		$this->criado = new DateTime ();
 		$this->status = "CRIADO";
 		
-		$this->sortearClubes ();
+		$this->sortearClubes ($clubes);
 	}
 	function getId() {
 		return $this->id;
@@ -45,18 +44,20 @@ class Campeonato {
 		$this->campeao = $campeao;
 	}
 	static function builder($nome) {
-		return new CampeonatoBuilderImp ( $nome );
+
+		return new CampeonatoBuilderImp ( $nome, new CampeonatoRepositoryImp(), new ClubeRepositoryImp());
 	}
-	private function sortearClubes() {
-		$qtdCubesJogador = count ( $this->clubes ) / count ( $this->jogadores );
+	private function sortearClubes($clubes) {
 		
-		$clubes = suffle ($this->clubes);
+		shuffle($clubes);
 		$max_jogadores = count($this->jogadores);
+		
 		foreach($clubes as $idx => $clube) {
-			$jogador = $jogadores[$idx % $max_jogadores];
+			$this->jogadores[$idx % $max_jogadores]->addClube($clube);
+
 			
 		}
 		
-		var_dump ( $clubesSorteados );
+		
 	}
 }

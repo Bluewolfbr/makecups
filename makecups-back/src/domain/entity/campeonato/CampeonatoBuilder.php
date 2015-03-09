@@ -19,33 +19,43 @@ class CampeonatoBuilderImp implements CampeonatoBuilder {
 
   private $jogadores = array();
 
-  function __constructor($nome) {
+  private $campeonatoRepository;
+
+  private $clubeRepository;
+
+  function __construct($nome, $campeonatoRepository, $clubeRepository) {
     $this->nome = $nome;
+    $this->campeonatoRepository = $campeonatoRepository;
+    $this->clubeRepository = $clubeRepository;
    
   }
 
   function jogadores ($jogadores){
-  	//TODO Criar objetos Jogadores
+  	
   	if (!is_array($jogadores)){
-  		array_push($this->jogadores, $jogadores);
+      $jogadorObj = $this->campeonatoRepository->createJogador($jogadores);
+  		array_push($this->jogadores, $jogadorObj);
   	}
   	else {
   		foreach ($jogadores as $jogador) {
-  			array_push($this->jogadores, $jogador);
+        $jogadorObj = $this->campeonatoRepository->createJogador($jogador);
+  			array_push($this->jogadores, $jogadorObj);
   		}
   	}
-  	
+
   	return $this;
   }
   
   function clubes ($clubes){
-  	//TODO criar objetos clubes
+  	
   	if (!is_array($clubes)){
-  		array_push($this->clubes, $clubes);
+      $clubeObj = $this->clubeRepository->createClube($clubes);
+  		array_push($this->clubes, $clubeObj);
   	}
   	else {
   		foreach ($clubes as $clube) {
-  			array_push($this->clubes, $clube);
+        $clubeObj = $this->clubeRepository->createClube($clube);
+  			array_push($this->clubes, $clubeObj);
   		}
   	}
   	 
@@ -54,6 +64,7 @@ class CampeonatoBuilderImp implements CampeonatoBuilder {
 
   function build () {
     $campeonato = new Campeonato($this->nome, $this->clubes, $this->jogadores);
+    $campeonato = $this->campeonatoRepository->save($campeonato);
     return $campeonato;
   }
 }

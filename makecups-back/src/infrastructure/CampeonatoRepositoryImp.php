@@ -45,7 +45,18 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 		
 		return $this->parseToJson ( $campeonatos );
 	}
-	
+
+	function createJogador ($nome){
+
+		$jogador = new Jogador($nome);
+		return $jogador;
+	}
+
+	function save ($campeonato){
+		$campeonato->setId(1);
+		return $campeonato;
+	}
+
 	private function parseToJson($campeonatos) {
 		$json = array ();
 		

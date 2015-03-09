@@ -3,17 +3,18 @@
 class Jogador {
 	
 	private $nome;
-	private $clube;
+	private $clubes;
 	
 	function __construct($nome){
 		$this->nome = $nome;
+		$this->clubes = array();
 	}
 	
 	function getNome(){
 		return $this->nome;
 	}
 	
-	function getClube(){
+	function getClubes(){
 		return $this->clube;
 	}
 	
@@ -21,8 +22,12 @@ class Jogador {
 		$this->nome = $nome;
 	}
 	
-	function setClube($clube){
-		$this->clube = $clube;
+	function setClubes($clubes){
+		$this->clubes = $clube;
+	}
+
+	function addClube($clube) {
+		array_push($this->clubes, $clube);
 	}
 	
 }

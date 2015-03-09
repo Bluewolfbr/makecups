@@ -36,21 +36,22 @@ class ClubeRepositoryImp implements IClubeRepository {
 	}
 	
 	function getById($id){
-		$liga = new Liga();
-		$liga->setId(1);
-		$liga->setNome("Brasileirão Série A");
-		
+		$liga = new Liga($id, "Brasileirão Série A");
+				
 		$clube = new Clube();
-		$clube->setId(1);
+		$clube->setId($id);
 		$clube->setAbbr("GRE");
 		$clube->setLiga($liga);
 		$clube->setNome("GRÊMIO");
 		$clube->setNomeCompleto("GRÊMIO FUTEBOL PORTO ALEGRENSE");
 		
-		$listClubes = array();
-		array_push($listClubes, $clube);
-				
-		return $this->parseToJson($listClubes);
+						
+		return $clube;
+	}
+
+	function createClube($id){
+		$clube = $this->getById($id);
+		return $clube;
 	}
 	
 	private function parseToJson($clubes){
