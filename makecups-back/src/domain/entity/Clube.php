@@ -1,54 +1,51 @@
 <?php
 class Clube {
 	
-	private $id_clube;
+	private $id;
 	private $nome;
 	private $nome_completo;
 	private $abbr;
 	private $liga;
-	
-	function getIdClube(){
-		return $id_clube;
+		
+	function getId(){
+		return $this->id;
 	}
 	
 	function getNome(){
-		return $nome;
+		return $this->nome;
 	}
 	
 	function getNomeCompleto(){
-		return $nome_completo;
+		return $this->nome_completo;
 	}
 	
 	function getAbbr(){
-		return $abbr;
+		return $this->abbr;
 	}
 	
 	function getLiga(){
-		return $liga;
+		return $this->liga;
 	}
 	
-	function setIdClube($id_clube){
-		$this->id_clube = $id_clube;
+	function setId($id){
+		$this->id = $id;
 	}
 	
 	function setNome($nome){
-		$this->nome = $nome;
+		$this->nome = utf8_encode($nome);
 	}
 	
 	function setNomeCompleto($nome_completo){
-		$this->nome_completo = $nome_completo;
+		$this->nome_completo = utf8_encode($nome_completo);
 	}
 	
 	function setAbbr($abbr){
-		$this->abbr = $abbr;
+		$this->abbr = utf8_encode($abbr);
 	}
 	
 	function setLiga($liga){
 		$this->liga = $liga;
 	}
-	
-	
-	
 	
 	
 }
