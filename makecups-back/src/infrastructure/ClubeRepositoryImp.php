@@ -6,7 +6,13 @@ class ClubeRepositoryImp implements IClubeRepository {
 	
 	function getAll(){
 
-		$sql = "SELECT * FROM CLUBE";
+		$sql = " SELECT CL.ID_CLUBE,
+				       LI.NOME LIGA,
+				       CL.NOME,
+				       CL.NOME_COMPLETO,
+				       CL.ABBR
+				FROM CLUBE CL
+				INNER JOIN LIGA LI ON LI.ID_LIGA = CL.ID_LIGA ";
 
 		$conexao = Connect::getInstance();
 
@@ -56,9 +62,26 @@ class ClubeRepositoryImp implements IClubeRepository {
 		$clube->setLiga($liga);
 		$clube->setNome("GRÊMIO");
 		$clube->setNomeCompleto("GRÊMIO FUTEBOL PORTO ALEGRENSE");
+
+		$sql = " SELECT CL.ID_CLUBE,
+				       LI.NOME LIGA,
+				       CL.NOME,
+				       CL.NOME_COMPLETO,
+				       CL.ABBR
+				FROM CLUBE CL
+				INNER JOIN LIGA LI ON LI.ID_LIGA = CL.ID_LIGA 
+				WHERE CL.ID_CLUBE = $1 ";
+
+		$params = array($id);
+
+		$conexao = Connect::getInstance();
+
+		$con = $conexao->establishConnection();
+
+		$result = $conexao->executeQueryParams($con, $sql, $params);
 		
 						
-		return $clube;
+		return $this->parseToJson($result);
 	}
 
 	function createClube($id){
@@ -69,21 +92,24 @@ class ClubeRepositoryImp implements IClubeRepository {
 	private function parseToJson($clubes){
 		$json = array();
 
-		var_dump($clubes);
-		
-		for ($i=0; $i < count($clubes); $i++) {
+		while ($clube = pg_fetch_object($clubes)) {
+		    $tmp = array(
+					"id" => $clube->id_clube,
+					"nome" => $clube->nome,
+					"nome_completo" => $clube->nome_completo,
+					"liga" => $clube->liga,
+					"abbr" => $clube->abbr
+					
+					
+			);
 			
-			/*$tmp = array(
-					"id" => $clube->getId(),
-					"nome" => $clube->getNome(),
-					"abbr" => $clube->getAbbr(),
-					"nome_completo" => $clube->getNomeCompleto(),
-					"liga" => $clube->getLiga()->getNome()
-			);*/
-			//array_push($json, $tmp);	
+			array_push($json, $tmp);	
+		   
 		}
-				
-		return $json;
+		
+		$retorno = array("clubes" => $json);
+		
+		return $retorno;
 		
 	}
 }

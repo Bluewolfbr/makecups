@@ -29,11 +29,19 @@ class Connect {
         return $connectionResources;
     }
 
-    function executeQuery($con, $query) {
+    public function executeQuery($con, $query) {
 
         $result=pg_query($con, $query);
 
-        return pg_fetch_array($result, 0, PGSQL_ASSOC);
+        return $result;
+
+    }
+
+    public function executeQueryParams($con, $query, $params) {
+
+        $result=pg_query_params($con, $query, $params);
+
+        return $result;
 
     }
 
