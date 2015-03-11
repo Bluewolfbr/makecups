@@ -54,9 +54,9 @@ $app->group ( "/v1", function () use($app) {
 		} );
 	} );
 
-	$app->group ( "/campeonatos", function () use($app) {
+	$app->group ( "/campeonatos", function () use ($app) {
 
-		$app->post( '/', function () use($app){
+		$app->post( '/', function () use ($app){
 			
 			$usuario = new Usuario();
 			$usuario->setLogin($app->request->headers->get('Php-Auth-User'));
@@ -64,7 +64,7 @@ $app->group ( "/v1", function () use($app) {
 			
 			$dados = json_decode($app->request->getBody());
 		
-			$campeonato = Campeonato::builder($dados->campeonato->nome)
+			$campeonato = Campeonato::builder($dados->campeonato->nome, $app->campeonatoRepository, $app->clubeRepository)
 				->clubes($dados->clubes)
 				->jogadores($dados->jogadores)
 				->build();
@@ -73,7 +73,7 @@ $app->group ( "/v1", function () use($app) {
 			
 		});
 		
-		$app->get ( '/', function () use($app) {
+		$app->get ( '/', function () use ($app) {
 			$usuario = new Usuario();
 			$usuario->setLogin($app->request->headers->get('Php-Auth-User'));
 			$usuario->setSenha($app->request->headers->get('Php-Auth-Pw'));
@@ -84,9 +84,12 @@ $app->group ( "/v1", function () use($app) {
 			echo json_encode ($campeonatos);
 		} );
 
-		$app->get ( '/:id', function ($id) use($app) {
+		$app->get ( '/:id', function ($id) use ($app) {
 
-			echo "FUNFA MESMO ESSE NEGOCIO";
+			$campeonatoRepository = $app->campeonatoRepository;
+			$campeonato = $campeonatoRepository->getById($id);
+
+			echo json_encode ($campeonato);
 
 			
 		} );

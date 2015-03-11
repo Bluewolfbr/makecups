@@ -1,10 +1,22 @@
 <?php
 require 'src/domain/repository/IClubeRepository.php';
+require 'src/infrastructure/Connect.php';
 
 class ClubeRepositoryImp implements IClubeRepository {
 	
 	function getAll(){
-		$liga = new Liga();
+
+		$sql = "SELECT * FROM CLUBE";
+
+		$conexao = Connect::getInstance();
+
+		$con = $conexao->establishConnection();
+
+		$result = $conexao->executeQuery($con, $sql);
+
+		
+
+		/*$liga = new Liga();
 		$liga->setId(1);
 		$liga->setNome("Brasileirão Série A");
 		
@@ -31,8 +43,8 @@ class ClubeRepositoryImp implements IClubeRepository {
 		
 		array_push($listClubes, $clube);
 		
-		
-		return $this->parseToJson($listClubes);
+		*/
+		return $this->parseToJson($result); 
 	}
 	
 	function getById($id){
@@ -56,16 +68,19 @@ class ClubeRepositoryImp implements IClubeRepository {
 	
 	private function parseToJson($clubes){
 		$json = array();
+
+		var_dump($clubes);
 		
-		foreach ($clubes as $clube) {
-			$tmp = array(
+		for ($i=0; $i < count($clubes); $i++) {
+			
+			/*$tmp = array(
 					"id" => $clube->getId(),
 					"nome" => $clube->getNome(),
 					"abbr" => $clube->getAbbr(),
 					"nome_completo" => $clube->getNomeCompleto(),
 					"liga" => $clube->getLiga()->getNome()
-			);
-			array_push($json, $tmp);	
+			);*/
+			//array_push($json, $tmp);	
 		}
 				
 		return $json;

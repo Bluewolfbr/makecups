@@ -7,6 +7,12 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 	}
 	
 	function getById($id) {
+
+		return array(
+              "campeonato" 
+			);
+
+		
 	}
 	
 	function getCampeonatos($usuario) {

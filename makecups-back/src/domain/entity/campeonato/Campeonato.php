@@ -43,9 +43,9 @@ class Campeonato {
 	function setCampeao($campeao) {
 		$this->campeao = $campeao;
 	}
-	static function builder($nome) {
+	static function builder($nome, $campeonatoRepository, $clubeRepository) {
 
-		return new CampeonatoBuilderImp ( $nome, new CampeonatoRepositoryImp(), new ClubeRepositoryImp());
+		return new CampeonatoBuilderImp ( $nome, $campeonatoRepository, $clubeRepository);
 	}
 	private function sortearClubes($clubes) {
 		
