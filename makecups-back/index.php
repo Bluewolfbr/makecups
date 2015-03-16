@@ -69,6 +69,8 @@ $app->group ( "/v1", function () use($app) {
 				->jogadores($dados->jogadores)
 				->build();
 
+			$campeonato = $app->campeonatoRepository->save($campeonato);				
+
 		 	$app->response->headers->set('Location', 'http://localhost/makecups/makecups-back/v1/campeonatos/' . $campeonato->getId());
 			
 		});

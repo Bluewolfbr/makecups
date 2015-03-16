@@ -16,7 +16,7 @@ Database		PostgreSQL 8.1
 Create table "campeonato"
 (
 	"id_campeonato" Numeric NOT NULL,
-	"id_campeao" Numeric NOT NULL,
+	"id_campeao" Numeric,
 	"nome" Varchar(20) NOT NULL,
 	"criado" Date NOT NULL,
 	"status" Char(1),
@@ -24,13 +24,14 @@ Create table "campeonato"
 ) Without Oids;
 
 
-Create table "time"
+Create table "clube"
 (
-	"id_time" Numeric NOT NULL,
+	"id_clube" Numeric NOT NULL,
 	"id_liga" Numeric NOT NULL,
 	"nome" Varchar(50) NOT NULL,
+	"nome_completo" Varchar(200) NOT NULL,
 	"abbr" Char(3) NOT NULL,
- primary key ("id_time")
+ primary key ("id_clube")
 ) Without Oids;
 
 
@@ -42,12 +43,12 @@ Create table "liga"
 ) Without Oids;
 
 
-Create table "campeonato_time"
+Create table "jogador"
 (
 	"id_campeonato" Numeric NOT NULL,
-	"id_time" Numeric NOT NULL,
+	"id_clube" Numeric NOT NULL,
 	"jogador" Varchar(50) NOT NULL,
- primary key ("id_campeonato","id_time")
+ primary key ("id_campeonato","id_clube")
 ) Without Oids;
 
 
@@ -74,9 +75,9 @@ Create table "partida"
 (
 	"id_partida" Numeric NOT NULL,
 	"id_rodada" Numeric NOT NULL,
-	"id_timeMandante" Numeric NOT NULL,
-	"id_timeVisitante" Numeric NOT NULL,
-	"id_timeVencedor" Numeric,
+	"id_clubeMandante" Numeric NOT NULL,
+	"id_clubeVisitante" Numeric NOT NULL,
+	"id_clubeVencedor" Numeric,
  primary key ("id_partida")
 ) Without Oids;
 
@@ -91,19 +92,19 @@ Create table "partida"
 
 /* Create Indexes */
 Create unique index "index_campeonato_ordem" on "rodada" using btree ("id_campeonato","ordem");
-Create unique index "unique_times_rodada" on "partida" using btree ("id_rodada","id_timeMandante","id_timeVisitante");
+Create unique index "unique_times_rodada" on "partida" using btree ("id_rodada","id_clubeMandante","id_clubeVisitante");
 
 
 
 /* Create Foreign Keys */
 
-Alter table "campeonato_time" add  foreign key ("id_campeonato") references "campeonato" ("id_campeonato") on update restrict on delete restrict;
+Alter table "jogador" add  foreign key ("id_campeonato") references "campeonato" ("id_campeonato") on update restrict on delete restrict;
 
 Alter table "rodada" add  foreign key ("id_campeonato") references "campeonato" ("id_campeonato") on update restrict on delete restrict;
 
-Alter table "campeonato_time" add  foreign key ("id_time") references "time" ("id_time") on update restrict on delete restrict;
+Alter table "jogador" add  foreign key ("id_clube") references "clube" ("id_clube") on update restrict on delete restrict;
 
-Alter table "time" add  foreign key ("id_liga") references "liga" ("id_liga") on update restrict on delete restrict;
+Alter table "clube" add  foreign key ("id_liga") references "liga" ("id_liga") on update restrict on delete restrict;
 
 Alter table "campeonato" add  foreign key ("id_campeao") references "usuario" ("id_usuario") on update restrict on delete restrict;
 

@@ -54,15 +54,7 @@ class ClubeRepositoryImp implements IClubeRepository {
 	}
 	
 	function getById($id){
-		$liga = new Liga($id, "Brasileirão Série A");
-				
-		$clube = new Clube();
-		$clube->setId($id);
-		$clube->setAbbr("GRE");
-		$clube->setLiga($liga);
-		$clube->setNome("GRÊMIO");
-		$clube->setNomeCompleto("GRÊMIO FUTEBOL PORTO ALEGRENSE");
-
+	
 		$sql = " SELECT CL.ID_CLUBE,
 				       LI.NOME LIGA,
 				       CL.NOME,

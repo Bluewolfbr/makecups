@@ -16,34 +16,7 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 	}
 	
 	function getCampeonatos($usuario) {
-		$campeonato1 = new Campeonato ( new JogadorRepositoryImp () );
-		$campeonato1->setId ( 1 );
-		$campeonato1->setNome ( "IV Copa de Rua" );
 		
-		$campeonatos = array ();
-		array_push ( $campeonatos, $campeonato1 );
-		
-		
-		$campeonato2 = new Campeonato ( new JogadorRepositoryImp () );
-		$campeonato2->setId ( 1 );
-		$campeonato2->setNome ( "IV Copa de Rua" );
-		
-		$jogador = new Jogador("Kley");
-		
-		$liga = new Liga();
-		$liga->setId(1);
-		$liga->setNome("Brasileirão Série A");
-		
-		$clube = new Clube();
-		$clube->setId(1);
-		$clube->setAbbr("GRE");
-		$clube->setLiga($liga);
-		$clube->setNome("GRÊMIO");
-		$clube->setNomeCompleto("GRÊMIO FUTEBOL PORTO ALEGRENSE");
-		
-		$jogador->setClube($clube);
-		
-		$campeonato2->setCampeao($jogador);
 		
 		array_push($campeonatos, $campeonato2);
 		
@@ -59,8 +32,33 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 	}
 
 	function save ($campeonato){
-		$campeonato->setId(1);
-		return $campeonato;
+		
+
+		$sql = " INSERT INTO CAMPEONATO 
+					(ID_CAMPEONATO,
+					 NOME,
+					 CRIADO,
+					 STATUS	 )
+ 					VALUES (
+ 					 NEXTVAL('CAMPEONATO_SEQ'),
+ 					  $1,
+ 					  $2,
+ 					  $3	) ";
+
+		$params = array($campeonato->getNome(), $campeonato->getCriado(), $campeonato->getStatus());
+
+		$conexao = Connect::getInstance();
+
+		$con = $conexao->establishConnection();
+
+		$result = $conexao->executeQueryParams($con, $sql, $params);
+
+	
+		//dump the result object
+		var_dump($result);
+
+
+		//return $campeonato;
 	}
 
 	private function parseToJson($campeonatos) {

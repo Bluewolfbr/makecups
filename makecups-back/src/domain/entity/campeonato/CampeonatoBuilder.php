@@ -63,8 +63,10 @@ class CampeonatoBuilderImp implements CampeonatoBuilder {
   }
 
   function build () {
-    $campeonato = new Campeonato($this->nome, $this->clubes, $this->jogadores);
-    $campeonato = $this->campeonatoRepository->save($campeonato);
-    return $campeonato;
+    return new Campeonato(array(
+      "nome" => $this->nome,
+      "clubes" => $this->clubes,
+      "jogadores" => $this->jogadores
+      ));
   }
 }
