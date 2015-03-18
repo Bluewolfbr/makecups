@@ -111,7 +111,7 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 				$sql = " INSERT INTO JOGADOR 
 					(ID_CAMPEONATO,
 					 ID_CLUBE,
-					 JOGADOR )
+					 NOME )
  					VALUES (
  					  $1,
  					  $2,
