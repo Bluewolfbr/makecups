@@ -7,10 +7,44 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 	}
 	
 	function getById($id) {
+		
+		$conexao = Connect::getInstance();
 
-		return array(
-              "campeonato" 
-			);
+		$con = $conexao->establishConnection();
+
+		$sql = " SELECT ID_CAMPEONATO,
+				        NOME,
+				        CRIADO,
+				        FINALIZADO,
+				        STATUS
+				 FROM CAMPEONATO
+				 WHERE ID_CAMPEONATO = $1 ";
+
+		$params = array($id);
+		
+		$resCampeonato = $conexao->executeQueryParams($con, $sql, $params);
+
+		$sql = " SELECT ID_CAMPEONATO,
+				        NOME,
+				        CRIADO,
+				        FINALIZADO,
+				        STATUS
+				 FROM CAMPEONATO
+				 WHERE ID_CAMPEONATO = $1 ";
+
+		$params = array($id);
+
+		$conexao = Connect::getInstance();
+
+		$con = $conexao->establishConnection();
+
+		$resCampeonato = $conexao->executeQueryParams($con, $sql, $params);
+
+
+		
+						
+		return $this->parseToJson($result);
+		
 
 		
 	}
@@ -32,7 +66,15 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 	}
 
 	function save ($campeonato){
+
+		$campeonato = $this->saveCampeonato($campeonato);
+		$this->saveJogadores($campeonato);
+
 		
+		return $campeonato;
+	}
+
+	function saveCampeonato($campeonato){
 
 		$sql = " INSERT INTO CAMPEONATO 
 					(ID_CAMPEONATO,
@@ -43,7 +85,7 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
  					 NEXTVAL('CAMPEONATO_SEQ'),
  					  $1,
  					  $2,
- 					  $3	) ";
+ 					  $3	) RETURNING ID_CAMPEONATO ";
 
 		$params = array($campeonato->getNome(), $campeonato->getCriado(), $campeonato->getStatus());
 
@@ -53,12 +95,43 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 
 		$result = $conexao->executeQueryParams($con, $sql, $params);
 
-	
-		//dump the result object
-		var_dump($result);
+		$res = pg_fetch_row($result);
+		
+		$campeonato->setId($res[0]);
 
+		return $campeonato;
 
-		//return $campeonato;
+	}
+
+	function saveJogadores ($campeonato){
+
+		foreach ($campeonato->getJogadores() as $jogador) {
+			foreach ($jogador->getClubes() as $clube) {
+				var_dump($clube);
+
+				$sql = " INSERT INTO JOGADOR 
+					(ID_CAMPEONATO,
+					 ID_CLUBE,
+					 JOGADOR )
+ 					VALUES (
+ 					  $1,
+ 					  $2,
+ 					  $3 ) ";
+
+				$params = array($campeonato->getId(), $clube->getId(), $jogador->getNome());
+
+				$conexao = Connect::getInstance();
+
+				$con = $conexao->establishConnection();
+
+				$result = $conexao->executeQueryParams($con, $sql, $params);
+				
+			}
+			
+
+			
+		}
+
 	}
 
 	private function parseToJson($campeonatos) {

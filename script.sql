@@ -19,6 +19,7 @@ Create table "campeonato"
 	"id_campeao" Numeric,
 	"nome" Varchar(20) NOT NULL,
 	"criado" Date NOT NULL,
+	"finalizado" Date,
 	"status" Char(1),
  primary key ("id_campeonato")
 ) Without Oids;

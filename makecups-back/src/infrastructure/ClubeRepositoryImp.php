@@ -77,7 +77,17 @@ class ClubeRepositoryImp implements IClubeRepository {
 	}
 
 	function createClube($id){
-		$clube = $this->getById($id);
+		$result = $this->getById($id);
+
+		//var_dump($result);
+
+		$clube = new Clube();
+		$clube->setId($result['clubes'][0]['id']);
+		$clube->setNome($result['clubes'][0]['nome']);
+		$clube->setNomeCompleto($result['clubes'][0]['nome_completo']);
+		$clube->setLiga($result['clubes'][0]['liga']);
+		$clube->setAbbr($result['clubes'][0]['abbr']);
+
 		return $clube;
 	}
 	

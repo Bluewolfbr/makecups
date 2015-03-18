@@ -15,7 +15,7 @@ class Jogador {
 	}
 	
 	function getClubes(){
-		return $this->clube;
+		return $this->clubes;
 	}
 	
 	function setNome($nome){
@@ -23,7 +23,7 @@ class Jogador {
 	}
 	
 	function setClubes($clubes){
-		$this->clubes = $clube;
+		$this->clubes = $clubes;
 	}
 
 	function addClube($clube) {

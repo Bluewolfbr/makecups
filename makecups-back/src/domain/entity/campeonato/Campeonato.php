@@ -58,6 +58,10 @@ class Campeonato {
 		$this->id = $id;
 	}
 
+	function getJogadores(){
+		return $this->jogadores;
+	}
+
 	function setNome($nome) {
 		$this->nome = $nome;
 	}
