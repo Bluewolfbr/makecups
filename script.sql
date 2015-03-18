@@ -48,7 +48,7 @@ Create table "jogador"
 (
 	"id_campeonato" Numeric NOT NULL,
 	"id_clube" Numeric NOT NULL,
-	"jogador" Varchar(50) NOT NULL,
+	"nome" Varchar(50) NOT NULL,
  primary key ("id_campeonato","id_clube")
 ) Without Oids;
 

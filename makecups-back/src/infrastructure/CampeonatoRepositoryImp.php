@@ -24,26 +24,26 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 		
 		$resCampeonato = $conexao->executeQueryParams($con, $sql, $params);
 
-		$sql = " SELECT ID_CAMPEONATO,
-				        NOME,
-				        CRIADO,
-				        FINALIZADO,
-				        STATUS
-				 FROM CAMPEONATO
-				 WHERE ID_CAMPEONATO = $1 ";
+		$sql = " SELECT J.NOME,
+				       CL.ID_CLUBE,
+				       CL.NOME NOME_CLUBE,
+				       CL.NOME_COMPLETO,
+				       LI.NOME NOME_LIGA,
+				       CL.ABBR
+				        
+				FROM JOGADOR J
+				INNER JOIN CLUBE CL ON CL.ID_CLUBE = J.ID_CLUBE
+				INNER JOIN LIGA LI ON LI.ID_LIGA = CL.ID_LIGA
+				WHERE J.ID_CAMPEONATO = $1 ";
 
 		$params = array($id);
 
-		$conexao = Connect::getInstance();
-
-		$con = $conexao->establishConnection();
-
-		$resCampeonato = $conexao->executeQueryParams($con, $sql, $params);
+		$resJogadores = $conexao->executeQueryParams($con, $sql, $params);
 
 
 		
 						
-		return $this->parseToJson($result);
+		return $this->parseToJson($resCampeonato, $resJogadores);
 		
 
 		
@@ -107,7 +107,6 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 
 		foreach ($campeonato->getJogadores() as $jogador) {
 			foreach ($jogador->getClubes() as $clube) {
-				var_dump($clube);
 
 				$sql = " INSERT INTO JOGADOR 
 					(ID_CAMPEONATO,
@@ -134,21 +133,47 @@ class CampeonatoRepositoryImp implements ICampeonatoRepository {
 
 	}
 
-	private function parseToJson($campeonatos) {
-		$json = array ();
-		
-		foreach ( $campeonatos as $campeonato ) {
-			$tmp = array (
-					"id" => $campeonato->getId (),
-					"nome" => $campeonato->getNome (),
-					"criado" => $campeonato->getCriado(),
-					"finalizado" => $campeonato->getFinalizado (),
-					"status" => $campeonato->getStatus(),
-					"campeao" => $campeonato->getJogadorRepository()->parseToJson($campeonato->getCampeao())
+	private function parseToJson($resCampeonato, $resJogadores) {
+		$jsonCampeonato = array();
+		$jsonJogadores = array();
+
+		while ($campeonato = pg_fetch_object($resCampeonato)) {
+		    $tmp = array(
+					"id" => $campeonato->id_campeonato,
+					"nome" => $campeonato->nome,
+					"criado" => $campeonato->criado,
+					"finalizado" => $campeonato->finalizado,
+					"status" => $campeonato->status
+					
+					
 			);
-			array_push ( $json, $tmp );
+			
+			array_push($jsonCampeonato, $tmp);	
+		   
 		}
 		
-		return $json;
+		while ($jogador = pg_fetch_object($resJogadores)) {
+		    $tmp = array(
+					"nome" => $jogador->nome,
+					"clube" => array(
+						"id" => $jogador->id_clube,
+						"nome" => $jogador->nome_clube,
+						"nome_completo" => $jogador->nome_completo,
+						"liga" => $jogador->nome_liga,
+						"abbr" => $jogador->abbr	
+						)
+					
+			);
+			
+			array_push($jsonJogadores, $tmp);	
+		   
+		}
+
+		$retorno = array(
+			"campeonato" => $jsonCampeonato,
+			"jogadores" => $jsonJogadores
+			    );
+		
+		return $retorno;
 	}
 }
