@@ -24,8 +24,10 @@ class CampeonatoApplication {
 				->jogadores($this->dados->jogadores)
 				->build();
 
+		$campeonatoBuild->gerarRodadas();
+				
 		$campeonato = $this->campeonatoRepository->save($campeonatoBuild);
-		
+
 		return $campeonato;		
 	}
 

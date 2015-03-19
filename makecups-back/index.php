@@ -4,11 +4,12 @@ require 'src/infrastructure/ClubeRepositoryImp.php';
 require 'src/infrastructure/CampeonatoRepositoryImp.php';
 require 'src/domain/entity/Usuario.php';
 require 'src/domain/entity/campeonato/Campeonato.php';
-require 'src/domain/entity/campeonato/CampeonatoBuilder.php';
+
 
 require 'src/domain/entity/Clube.php';
 
 require 'src/domain/entity/campeonato/Jogador.php';
+require 'src/application/CampeonatoApplication.php';
 
 
 require 'src/domain/entity/Liga.php';
@@ -68,7 +69,7 @@ $app->group ( "/v1", function () use($app) {
 			
 			$dados = json_decode($app->request->getBody());
 
-			$campeonatoApplication = $this->campeonatoApplication;
+			$campeonatoApplication = $app->campeonatoApplication;
 			$campeonatoApplication->setDados($dados);
 			$campeonatoApplication->setCampeonatoRepository($app->campeonatoRepository);
 			$campeonatoApplication->setClubeRepository($app->clubeRepository);

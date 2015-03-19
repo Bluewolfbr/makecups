@@ -1,4 +1,6 @@
 <?php
+require 'src/domain/entity/campeonato/CampeonatoBuilder.php';
+
 class Campeonato {
 	private $id;
 	private $nome;
@@ -100,6 +102,6 @@ class Campeonato {
 	}
 
 	private function geraRodadas(){
-		
+
 	}
 }
