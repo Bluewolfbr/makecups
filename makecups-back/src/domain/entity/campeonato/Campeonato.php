@@ -8,6 +8,7 @@ class Campeonato {
 	private $campeao;
 	private $jogadores;
 	private $clubes;
+	private $rodadas;
 	
 	function __construct() {
 
@@ -95,6 +96,10 @@ class Campeonato {
 			
 		}
 		
+		
+	}
+
+	private function geraRodadas(){
 		
 	}
 }
