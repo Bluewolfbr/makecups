@@ -29,6 +29,10 @@ $app->campeonatoRepository = function () {
 	return new CampeonatoRepositoryImp();
 };
 
+$app->campeonatoApplication = function (){
+	return new CampeonatoApplication();
+};
+
 $app->group ( "/v1", function () use($app) {
 
 	$app->get ( '/hello/:name', function ($name) {
@@ -63,13 +67,14 @@ $app->group ( "/v1", function () use($app) {
 			$usuario->setSenha($app->request->headers->get('Php-Auth-Pw'));
 			
 			$dados = json_decode($app->request->getBody());
-		
-			$campeonato = Campeonato::builder($dados->campeonato->nome, $app->campeonatoRepository, $app->clubeRepository)
-				->clubes($dados->clubes)
-				->jogadores($dados->jogadores)
-				->build();
 
-			$campeonato = $app->campeonatoRepository->save($campeonato);				
+			$campeonatoApplication = $this->campeonatoApplication;
+			$campeonatoApplication->setDados($dados);
+			$campeonatoApplication->setCampeonatoRepository($app->campeonatoRepository);
+			$campeonatoApplication->setClubeRepository($app->clubeRepository);
+
+			$campeonato = $campeonatoApplication->post();
+				 
 
 		 	$app->response->headers->set('Location', 'http://localhost/makecups/makecups-back/v1/campeonatos/' . $campeonato->getId());
 			

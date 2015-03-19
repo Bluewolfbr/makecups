@@ -6,4 +6,6 @@ class Rodada {
 	private nome;
 	private $partidas;
 
+	
+
 }
